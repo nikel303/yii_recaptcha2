@@ -1,7 +1,9 @@
 {
   "name": "nikel303/yii_recaptcha2",
   "description": "Recaptcha v.2 widget and validator for Yii1",
-  "minimum-stability": "dev",
+  "keywords": ["yii", "recaptcha", "captcha", "spam", "abuse"],
+	"type": "yii-extension",
+    "license": "BSD-3-Clause",
   "authors": [
     {
       "name": "nikel303",
@@ -10,6 +12,7 @@
   ],
   "require": {
     "php": "~5.4",
+    "yiisoft/yii": "1.1.*",
     "google/recaptcha": "~1.1"
   },
   "autoload": {
