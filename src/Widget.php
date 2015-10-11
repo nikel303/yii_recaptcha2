@@ -20,7 +20,6 @@ class Widget extends \CWidget {
 			'data-size' => $this->size,
 			'data-theme' => $this->theme,
 		], '', true);
-		//echo \CHtml::closeTag('div');
 	}
 
 }
