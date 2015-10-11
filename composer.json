@@ -13,8 +13,8 @@
     "google/recaptcha": "~1.1"
   },
   "autoload": {
-    "psr-0": {
-      "YiiRecaptcha2": "src/"
+    "psr-4": {
+      "YiiRecaptcha2\\": "src/"
     }
   }
 }
