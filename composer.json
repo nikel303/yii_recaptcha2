@@ -1,7 +1,7 @@
 {
   "name": "nikel303/yii_recaptcha2",
   "description": "Recaptcha v.2 widget and validator for Yii1",
-  "minimum-stability": "0.0.1",
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "nikel303",
