@@ -35,7 +35,6 @@ class Widget extends \CInputWidget
 
 		$inputId = \CHtml::activeId($this->model, $this->attribute);
 
-
 		if (empty($this->jsCallback)) {
 			$jsCode = "var recaptchaCallback_{$inputId} = function(response){jQuery('#{$inputId}').val(response);};";
 		} else {
