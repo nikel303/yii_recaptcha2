@@ -11,6 +11,9 @@ class Validator extends \CValidator {
 
 	protected function validateAttribute($object, $attribute) {
 
+		if($this->skipOnError && $object->hasErrors())
+			return;
+
 		$value = $object->{$attribute};
 
 		$recaptcha = new \ReCaptcha\ReCaptcha($this->privateKey);
