@@ -31,7 +31,7 @@ class Widget extends \CInputWidget
 	protected function customFieldPrepare()
 	{
 
-		echo \CHtml::activeHiddenField($this->model, $this->attribute, ['value' => null]);
+		echo \CHtml::activeHiddenField($this->model, $this->attribute, ['value' => '']);
 
 		$inputId = \CHtml::activeId($this->model, $this->attribute);
 
