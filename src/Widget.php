@@ -17,7 +17,7 @@ class Widget extends \CInputWidget
 	{
 
 		if (empty($this->publicKey))
-			throw new CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.publicKey cannot be empty.'));
+			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.publicKey cannot be empty.'));
 
 		list($name, $id) = $this->resolveNameID();
 
@@ -34,9 +34,9 @@ class Widget extends \CInputWidget
 		$this->htmlOptions['value'] = null;
 
 		if ($this->hasModel())
-			echo CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
+			echo \CHtml::activeHiddenField($this->model, $this->attribute, $this->htmlOptions);
 		else
-			echo CHtml::hiddenField($name, $this->value, $this->htmlOptions);
+			echo \CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 
 		echo \CHtml::tag('div', [
 			'class' => 'g-recaptcha',
