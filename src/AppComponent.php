@@ -72,7 +72,8 @@ class AppComponent extends \CApplicationComponent {
 EOT;
 
 			$cs = \Yii::app()->clientScript;
-			$cs->registerScriptFile('https://www.google.com/recaptcha/api.js' . ([] !== $params ? '?' . http_build_query($params) : ''), \CClientScript::POS_END);
+			$cs->registerScript(__CLASS__, $jsCallback, \CClientScript::POS_END);
+			$cs->registerScriptFile($this->apiUrl . ([] !== $params ? '?' . http_build_query($params) : ''), \CClientScript::POS_END);
 		}
 	}
 
