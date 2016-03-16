@@ -16,7 +16,7 @@ class Validator extends \CValidator {
 
 		$value = $object->{$attribute};
 
-		$recaptcha = new \ReCaptcha\ReCaptcha($this->privateKey);
+		$recaptcha = new ReCaptcha($this->privateKey);
 		$resp = $recaptcha->verify($value, \Yii::app()->request->getUserHostAddress());
 
 		if(!$resp->isSuccess())
