@@ -55,7 +55,7 @@ class Widget extends \CInputWidget
 			echo \CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 
 		echo \CHtml::tag('div', [
-			'id' => "'{$this->getId()}'",
+			'id' => $this->getId(),
 			'class' => 'g-recaptcha',
 			'data-sitekey' => $this->publicKey,
 			'data-size' => $this->size,
