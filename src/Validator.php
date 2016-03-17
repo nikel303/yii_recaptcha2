@@ -9,14 +9,22 @@ class Validator extends \CValidator {
 	public $skipOnError = true;
 	public $privateKey;
 
+	public $recaptchaComponent = 'recaptcha';
+	protected $_recaptchaComponent;
+
 	protected function validateAttribute($object, $attribute) {
 
 		if($this->skipOnError && $object->hasErrors())
 			return;
 
+		if (null == $this->recaptchaComponent)
+			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.recaptchaComponent can be define.'));
+
+		$this->_recaptchaComponent = \Yii::app()->{$this->recaptchaComponent};
+
 		$value = $object->{$attribute};
 
-		$recaptcha = new ReCaptcha($this->privateKey);
+		$recaptcha = new ReCaptcha($this->_recaptchaComponent->privateKey);
 		$resp = $recaptcha->verify($value, \Yii::app()->request->getUserHostAddress());
 
 		if(!$resp->isSuccess())
