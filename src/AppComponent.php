@@ -51,7 +51,7 @@ class AppComponent extends \CApplicationComponent {
 			$widgetParams = \CJavaScript::jsonEncode($widgetParams);
 
 			$jsCallback =  <<<EOT
-(function(this){
+(function(g){
 	'use strict';
 	var ReCaptchaComponent = function () {
 	    var self, defaultParams = {$widgetParams}, dfd = $.Deferred();
@@ -72,7 +72,7 @@ class AppComponent extends \CApplicationComponent {
 	    };
         return self;
 	};
-	this.recaptchaLoadCallback = (this.window.reCaptchaComponent = new ReCaptchaComponent()).init
+	g.recaptchaLoadCallback = (this.window.reCaptchaComponent = new ReCaptchaComponent()).init
 })(this);
 EOT;
 
