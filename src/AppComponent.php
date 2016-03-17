@@ -72,7 +72,7 @@ class AppComponent extends \CApplicationComponent {
 	    };
         return self;
 	};
-	g.recaptchaLoadCallback = (this.window.reCaptchaComponent = new ReCaptchaComponent()).init
+	g.recaptchaLoadCallback = (g.window.reCaptchaComponent = new ReCaptchaComponent()).init
 })(this);
 EOT;
 
