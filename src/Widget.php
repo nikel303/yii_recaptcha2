@@ -5,6 +5,9 @@ namespace YiiRecaptcha2;
 class Widget extends \CInputWidget
 {
 
+	public $recaptchaComponent = 'recaptcha';
+	protected $_recaptchaComponent;
+
 	public $publicKey;
 	//
 	public $lang = 'ru';
@@ -13,11 +16,21 @@ class Widget extends \CInputWidget
 
 	public $jsCallback;
 
+	public function getId($autoGenerate = true)
+	{
+		if ($this->_id !== null)
+			return $this->_id;
+		elseif ($autoGenerate)
+			return $this->_id = 'widgetRecaptcha_' . self::$_counter++;
+	}
+
 	public function run()
 	{
 
-		if (empty($this->publicKey))
-			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.publicKey cannot be empty.'));
+		if (null == $this->recaptchaComponent)
+			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.recaptchaComponent can be define.'));
+
+		$this->_recaptchaComponent = \Yii::app()->{$this->recaptchaComponent};
 
 		list($name, $id) = $this->resolveNameID();
 
@@ -39,6 +52,7 @@ class Widget extends \CInputWidget
 			echo \CHtml::hiddenField($name, $this->value, $this->htmlOptions);
 
 		echo \CHtml::tag('div', [
+			'id' => "'{$this->getId()}'",
 			'class' => 'g-recaptcha',
 			'data-sitekey' => $this->publicKey,
 			'data-size' => $this->size,
@@ -50,20 +64,23 @@ class Widget extends \CInputWidget
 	protected function registerClientScript()
 	{
 
-		$cs = \Yii::app()->clientScript;
-
-		$cs->registerScriptFile('https://www.google.com/recaptcha/api.js?hl=' . $this->lang, \CClientScript::POS_END);
+		$this->_recaptchaComponent->registerClientScript();
 
 		$id = $this->htmlOptions['id'];
 
+		$jsCode = [];
 		if (empty($this->jsCallback)) {
-			$jsCode = "var recaptchaCallback_{$id} = function(response){jQuery('#{$id}').val(response);};";
+			$jsCode[] = "var recaptchaCallback_{$id} = function(response){jQuery('#{$id}').val(response);};";
 		} else {
-			$jsCode = "var recaptchaCallback_{$id} = function(response){jQuery('#{$id}').val(response); {$this->jsCallback}(response);};";
+			$jsCode[] = "var recaptchaCallback_{$id} = function(response){jQuery('#{$id}').val(response); {$this->jsCallback}(response);};";
 		}
 
 		$this->jsCallback = "recaptchaCallback_{$id}";
-		$cs->registerScript("recaptchaCallback_{$id}", $jsCode, \CClientScript::POS_END);
+
+		$jsCode[] = "this.window.reCaptchaComponent.then(function(c){c.widget('{$this->getId()}',{callback:'recaptchaCallback_{$id}'});});";
+
+		$cs = \Yii::app()->clientScript;
+		$cs->registerScript("recaptchaCallback_{$id}", join("\n", $jsCode), \CClientScript::POS_END);
 	}
 
 }

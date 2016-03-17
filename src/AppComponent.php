@@ -38,41 +38,48 @@ class AppComponent extends \CApplicationComponent {
 			if(!empty($this->lang))
 				$params['hl'] = $this->lang;
 
+			$widgetParams = [
+				'sitekey'=> $this->publicKey,
+			];
+
+			if(!empty($this->size))
+				$widgetParams['size'] = $this->size;
+
+			if(!empty($this->theme))
+				$widgetParams['theme'] = $this->theme;
+
+			$widgetParams = \CJavaScript::jsonEncode($widgetParams);
+
 			$jsCallback =  <<<EOT
 (function(this){
-
 	'use strict';
 	var ReCaptchaComponent = function () {
-
-	    var self;
-	    var dfd = $.Deferred();
-
+	    var self, defaultParams = {$widgetParams}, dfd = $.Deferred();
 	    self = {
-
 	        init: function () {
 	            return dfd.resolve(self);
 	        },
-
 	        promise: function () {
 	            return dfd.promise();
 	        },
-
 	        recaptcha: function () {
 	            return grecaptcha;
+	        },
+	        widget: function (id, params) {
+				params = $.extend({}, defaultParams, params || {});
+	            return grecaptcha.render(id, params);
 	        }
-
 	    };
-
-	    return self;
+        return self;
 	};
-
 	this.recaptchaLoadCallback = (this.window.reCaptchaComponent = new ReCaptchaComponent()).init
-
 })(this);
 EOT;
 
 			$cs = \Yii::app()->clientScript;
-			$cs->registerScript(__CLASS__, $jsCallback, \CClientScript::POS_END);
+
+			$cs->registerPackage('jquery');
+			$cs->registerScript('ReCaptchaComponent', $jsCallback, \CClientScript::POS_END);
 			$cs->registerScriptFile($this->apiUrl . ([] !== $params ? '?' . http_build_query($params) : ''), \CClientScript::POS_END);
 		}
 	}
