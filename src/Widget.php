@@ -80,7 +80,7 @@ class Widget extends \CInputWidget
 
 		$this->jsCallback = "recaptchaCallback_{$id}";
 
-		$jsCode[] = "window.reCaptchaComponent.then(function(c){c.widget('{$this->getId()}',{callback:'recaptchaCallback_{$id}'});});";
+		$jsCode[] = "window.reCaptchaComponent.promise().then(function(c){c.widget('{$this->getId()}',{callback:'recaptchaCallback_{$id}'});});";
 
 		$cs = \Yii::app()->clientScript;
 		$cs->registerScript("recaptchaCallback_{$id}", join("\n", $jsCode), \CClientScript::POS_END);
