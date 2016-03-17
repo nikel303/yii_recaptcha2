@@ -56,11 +56,6 @@ class Widget extends \CInputWidget
 
 		echo \CHtml::tag('div', [
 			'id' => $this->getId(),
-			'class' => 'g-recaptcha',
-			'data-sitekey' => $this->publicKey,
-			'data-size' => $this->size,
-			'data-theme' => $this->theme,
-			'data-callback' => $this->jsCallback,
 		], '', true);
 	}
 
