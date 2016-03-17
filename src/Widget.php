@@ -16,6 +16,9 @@ class Widget extends \CInputWidget
 
 	public $jsCallback;
 
+	private static $_counter = 0;
+	private $_id;
+
 	public function getId($autoGenerate = true)
 	{
 		if ($this->_id !== null)
