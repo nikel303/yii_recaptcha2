@@ -69,16 +69,16 @@ class Widget extends \CInputWidget {
 		$this->jsCallback = "recaptchaCallback_{$id}";
 
 		$widgetParams = [
-			'callback' => "recaptchaCallback_{$id}",
+			"callback: recaptchaCallback_{$id}",
 		];
 
 		if (!empty($this->size))
-			$widgetParams['size'] = $this->size;
+			$widgetParams[] = 'size:"' . $this->size . '"';
 
 		if (!empty($this->theme))
-			$widgetParams['theme'] = $this->theme;
+			$widgetParams[] = 'theme:"' . $this->theme . '"';
 
-		$widgetParams = \CJavaScript::jsonEncode($widgetParams);
+		$widgetParams = [] === $widgetParams ? '{}' : '{' . join(',', $widgetParams) . '}';
 
 		$jsCode[] = "window.reCaptchaComponent.promise().then(function(c){c.widget('{$this->getId()}', {$widgetParams});});";
 
