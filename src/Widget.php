@@ -2,15 +2,11 @@
 
 namespace YiiRecaptcha2;
 
-class Widget extends \CInputWidget
-{
+class Widget extends \CInputWidget {
 
 	public $recaptchaComponent = 'recaptcha';
 	protected $_recaptchaComponent;
 
-	public $publicKey;
-	//
-	public $lang = 'ru';
 	public $size = 'normal';
 	public $theme = 'light';
 
@@ -19,16 +15,14 @@ class Widget extends \CInputWidget
 	private static $_counter = 0;
 	private $_id;
 
-	public function getId($autoGenerate = true)
-	{
+	public function getId($autoGenerate = true) {
 		if ($this->_id !== null)
 			return $this->_id;
 		elseif ($autoGenerate)
 			return $this->_id = 'widgetRecaptcha_' . self::$_counter++;
 	}
 
-	public function run()
-	{
+	public function run() {
 
 		if (null == $this->recaptchaComponent)
 			throw new \CException(\Yii::t('yii', 'Property YiiRecaptcha2\Widget.recaptchaComponent can be define.'));
@@ -59,8 +53,7 @@ class Widget extends \CInputWidget
 		], '', true);
 	}
 
-	protected function registerClientScript()
-	{
+	protected function registerClientScript() {
 
 		$this->_recaptchaComponent->registerClientScript();
 
@@ -75,7 +68,19 @@ class Widget extends \CInputWidget
 
 		$this->jsCallback = "recaptchaCallback_{$id}";
 
-		$jsCode[] = "window.reCaptchaComponent.promise().then(function(c){c.widget('{$this->getId()}',{callback:recaptchaCallback_{$id}});});";
+		$widgetParams = [
+			'callback' => "recaptchaCallback_{$id}",
+		];
+
+		if (!empty($this->size))
+			$widgetParams['size'] = $this->size;
+
+		if (!empty($this->theme))
+			$widgetParams['theme'] = $this->theme;
+
+		$widgetParams = \CJavaScript::jsonEncode($widgetParams);
+
+		$jsCode[] = "window.reCaptchaComponent.promise().then(function(c){c.widget('{$this->getId()}', {$widgetParams});});";
 
 		$cs = \Yii::app()->clientScript;
 		$cs->registerScript("recaptchaCallback_{$id}", join("\n", $jsCode), \CClientScript::POS_END);
