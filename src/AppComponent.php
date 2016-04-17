@@ -20,10 +20,10 @@ class AppComponent extends \CApplicationComponent {
 		parent::init();
 
 		if (empty($this->publicKey))
-			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\AppComponent.publicKey cannot be empty.'));
+			throw new \CException(\Yii::t('yii', 'Property YiiRecaptcha2\AppComponent.publicKey cannot be empty.'));
 
 		if (empty($this->privateKey))
-			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\AppComponent.privateKey cannot be empty.'));
+			throw new \CException(\Yii::t('yii', 'Property YiiRecaptcha2\AppComponent.privateKey cannot be empty.'));
 	}
 
 	public function registerClientScript() {

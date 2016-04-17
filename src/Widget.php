@@ -31,7 +31,7 @@ class Widget extends \CInputWidget
 	{
 
 		if (null == $this->recaptchaComponent)
-			throw new \CException(Yii::t('yii', 'Property YiiRecaptcha2\Widget.recaptchaComponent can be define.'));
+			throw new \CException(\Yii::t('yii', 'Property YiiRecaptcha2\Widget.recaptchaComponent can be define.'));
 
 		$this->_recaptchaComponent = \Yii::app()->{$this->recaptchaComponent};
 
