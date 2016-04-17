@@ -7,7 +7,6 @@ use ReCaptcha;
 class Validator extends \CValidator {
 
 	public $skipOnError = true;
-	public $privateKey;
 
 	public $recaptchaComponent = 'recaptcha';
 	protected $_recaptchaComponent;

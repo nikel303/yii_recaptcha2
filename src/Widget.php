@@ -7,8 +7,8 @@ class Widget extends \CInputWidget {
 	public $recaptchaComponent = 'recaptcha';
 	protected $_recaptchaComponent;
 
-	public $size = 'normal';
-	public $theme = 'light';
+	public $size;
+	public $theme;
 
 	public $jsCallback;
 
